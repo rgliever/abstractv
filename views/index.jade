@@ -2,5 +2,19 @@ extends layout
 
 block content
 	h1= title
-	p Welcome to #{title}
+
+	div(id='video_and_buttons')
+
+		if curr_id > 0
+			a.btn.btn-info(href='/exp/'+(Number(curr_id)-1), id='prev_button', role='button') 
+				span.glyphicon.glyphicon-chevron-left
+
+		iframe(id = 'video_player',
+						src = 'https://player.vimeo.com' + object.uri.replace(/videos/, 'video') + '?autoplay=1&color=9600FA',
+						frameborder = '0',
+						webkitallowfullscreen, mozallowfullscreen,allowfullscreen)
+
+		if curr_id < 29				
+			a.btn.btn-info(href='/exp/'+(Number(curr_id)+1), id='next_button', role='button')
+				span.glyphicon.glyphicon-chevron-right
 

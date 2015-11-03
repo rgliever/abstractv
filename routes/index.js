@@ -16,9 +16,9 @@ var place_holder = -1;
 
 // Calls Vimeo API with provided path and executes callback after
 var get_json = function (category_path, callback) {
-	 lib.request(/*options*/{
+	 	lib.request(/*options*/{
 			// This is the path for the videos contained within the staff picks channels
-			path : category_path,
+			path : category_path + '?sort=date',
 			//This adds the parameters to request page two, and 10 items per page
 			query : {
 				page : 1,

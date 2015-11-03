@@ -16,3 +16,15 @@ var setVideoDimensions = function() {
 	$('#video_and_buttons .btn span').css('top', height/2);
 	$('#video_player').width(width);
 }
+
+var iframe = $('#video_player')[0];
+var player = $f(iframe);
+
+player.addEvent('ready', function() {
+	player.addEvent('finish', onFinish);
+})
+
+function onFinish(id) {
+	console.log('Video finished!!!');
+	$('h1').css('color', '#00FF00');
+}

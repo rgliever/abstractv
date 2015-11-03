@@ -10,7 +10,8 @@ block content
 				span.glyphicon.glyphicon-chevron-left
 
 		iframe(id = 'video_player',
-						src = 'https://player.vimeo.com' + object.uri.replace(/videos/, 'video') + '?autoplay=1&color=9600FA',
+						src = 'https://player.vimeo.com' + object.uri.replace(/videos/, 'video') + 
+								'?api=1&player_id=video_player&autoplay=1&color=9600FA',
 						frameborder = '0',
 						webkitallowfullscreen, mozallowfullscreen,allowfullscreen)
 

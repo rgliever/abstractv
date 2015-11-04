@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('abstractv');
+var debug = require('debug')('AbstracTV');
 var http = require('http');
 
 /**

@@ -6,7 +6,10 @@ block content
 	div(id='video_and_buttons')
 
 		if curr_id > 0
-			a.btn.btn-info(href='/exp/'+(Number(curr_id)-1), id='prev_button', role='button') 
+			a.btn.btn-info(href='/'+tag+'/'+(Number(curr_id)-1), id='prev_button', role='button') 
+				span.glyphicon.glyphicon-chevron-left
+		else
+			a.btn.btn-info.disabled(href='/'+tag+'/'+(Number(curr_id)-1), id='prev_button', role='button') 
 				span.glyphicon.glyphicon-chevron-left
 
 		iframe(id = 'video_player',
@@ -16,6 +19,12 @@ block content
 						webkitallowfullscreen, mozallowfullscreen,allowfullscreen)
 
 		if curr_id < 29				
-			a.btn.btn-info(href='/exp/'+(Number(curr_id)+1), id='next_button', role='button')
+			a.btn.btn-info(href='/'+tag+'/'+(Number(curr_id)+1), id='next_button', role='button')
 				span.glyphicon.glyphicon-chevron-right
+		else
+			a.btn.btn-info.disabled(href='/'+tag+'/'+(Number(curr_id)+1), id='next_button', role='button')
+				span.glyphicon.glyphicon-chevron-right
+
+	div(id='video_description')
+		
 

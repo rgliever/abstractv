@@ -2,6 +2,7 @@
 
 $(document).ready(function() {
 	setVideoDimensions();
+	setFinishEvent();
 });
 
 $(window).resize(function() {
@@ -17,14 +18,21 @@ var setVideoDimensions = function() {
 	$('#video_player').width(width);
 }
 
-var iframe = $('#video_player')[0];
-var player = $f(iframe);
+// go to next video when the last one finishes
+var setFinishEvent = function() {
+	var iframe = $('#video_player')[0];
+	var player = $f(iframe);
 
-player.addEvent('ready', function() {
-	player.addEvent('finish', onFinish);
-})
+	player.addEvent('ready', function() {
+		player.addEvent('finish', onFinish);
+	})
 
-function onFinish(id) {
-	console.log('Video finished!!!');
-	$('h1').css('color', '#00FF00');
+	function onFinish(id) {
+		console.log('Video finished!!!');
+		var split_url = window.location.href.split('/');
+		var page_num = parseInt(split_url.pop(), 10);
+		if (page_num + 1 < 30) {
+			window.location.href = split_url.join('/') + '/' + (++page_num);
+		}
+	}
 }

@@ -12,13 +12,13 @@ var lib = new Vimeo(CLIENT_ID, CLIENT_SECRET, ACCESS_TOKEN);
 
 // Extra variables
 var json = "";
-var place_holder = -1;
+var place_holder = 0;
 
 // Calls Vimeo API with provided path and executes callback after
 var get_json = function (category_path, callback) {
 	 	lib.request(/*options*/{
 			// This is the path for the videos contained within the staff picks channels
-			path : category_path + '?sort=date',
+			path : category_path + '?sort=relevant',
 			//This adds the parameters to request page two, and 10 items per page
 			query : {
 				page : 1,
@@ -49,34 +49,74 @@ router.get('/', function(req, res, next) {
 	res.redirect('/exp');
 });
 
-/* Calls Vimeo API to set json string to result for experimental videos, then redirects to one video */
+/* Calls Vimeo API to set json string to result for [category] videos, then redirects to one video */
+
+// EXPERIMENTAL
 router.get('/exp', function(req, res, next) {
 	get_json('/categories/experimental/videos', function(body) {
 		json = body;
-		if (place_holder >= 0) {
-			res.redirect('/exp/' + place_holder)
-		} else {
-			res.redirect('/exp/0');
-		}
+		res.redirect('/exp/' + place_holder)
 	});
 });
 
 router.get('/exp/:id', function(req, res, next) {
-	place_holder = -1;
+	place_holder = 0;
 	if (!json) {
 		place_holder = req.params.id;
 		res.redirect('/exp');
 	} else {
-		res.render('index', { title: 'Experimental', object: json.data[req.params.id], curr_id: req.params.id });
+		res.render('index', { 
+			title: 'Experimental', 
+			tag: 'exp', 
+			object: json.data[req.params.id], 
+			curr_id: req.params.id });
 	}
 });
 
+
+// ART & DESIGN
 router.get('/art', function(req, res, next) {
-	res.render('index', { title: 'Art' });
+	get_json('/categories/art/videos', function(body) {
+		json = body;
+		res.redirect('/art/' + place_holder)
+	});
 });
 
+router.get('/art/:id', function(req, res, next) {
+	place_holder = 0;
+	if (!json) {
+		place_holder = req.params.id;
+		res.redirect('/art');
+	} else {
+		res.render('index', { 
+			title: 'Arts & Design', 
+			tag: 'art',
+			object: json.data[req.params.id], 
+			curr_id: req.params.id });
+	}
+});
+
+
+// ANIMATION
 router.get('/ani', function(req, res, next) {
-	res.render('index', { title: 'Animation' });
+	get_json('/categories/animation/videos', function(body) {
+		json = body;
+		res.redirect('/ani/' + place_holder)
+	});
+});
+
+router.get('/ani/:id', function(req, res, next) {
+	place_holder = 0;
+	if (!json) {
+		place_holder = req.params.id;
+		res.redirect('/ani');
+	} else {
+		res.render('index', { 
+			title: 'Animation', 
+			tag: 'ani',
+			object: json.data[req.params.id], 
+			curr_id: req.params.id });
+	}
 });
 
 

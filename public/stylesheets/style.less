@@ -49,9 +49,6 @@ li {
 		font-weight: bolder;
 		opacity: 0.6;
 		border: 0 none;
-		span {
-
-		}
 		&:hover {
 			opacity: 1;
 		}
@@ -65,5 +62,33 @@ li {
 	}
 	#next_button {
 		float: right;
+	}
+}
+
+a.btn.disabled, 
+fieldset[disabled] a.btn {
+	opacity: 0.1 !important;
+}
+
+// FOOTER
+footer {
+	margin-top: 30px;
+	hr {
+		width: 90%;
+		color: #666;
+		padding: 0.5px;
+		opacity: 0.2;
+		text-align: center;
+		padding: 0;
+		margin: 0 auto;
+		margin-bottom: 10px;
+	}
+	p {
+		text-align: center;
+		font-size: 0.7em;
+		font-weight: lighter;
+		letter-spacing: 2px;
+		text-transform: uppercase;
+		color: #666;
 	}
 }

@@ -13,14 +13,13 @@ block content
 			a.btn.btn-info.disabled(href='/'+tag+'/'+(Number(curr_id)-1), id='prev_button', role='button') 
 				span.glyphicon.glyphicon-chevron-left
 
-		if object != -1
-			iframe(id = 'video_player',
-							src = 'https://player.vimeo.com' + object.uri.replace(/videos/, 'video') + 
+		iframe(id = 'video_player',
+						src = 'https://player.vimeo.com' + object.uri.replace(/videos/, 'video') + 
 									'?api=1&player_id=video_player&autoplay=1&color=9600FA',
-							frameborder = '0',
-							webkitallowfullscreen, mozallowfullscreen,allowfullscreen)
+						frameborder = '0',
+						webkitallowfullscreen, mozallowfullscreen, allowfullscreen)
 
-		if curr_id < 29				
+		if curr_id < 44			
 			a.btn.btn-info(href='/'+tag+'/'+(Number(curr_id)+1), id='next_button', role='button')
 				span.glyphicon.glyphicon-chevron-right
 		else

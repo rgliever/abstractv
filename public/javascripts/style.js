@@ -11,8 +11,8 @@ $(window).resize(function() {
 });
 
 var setVideoDimensions = function() {
-	var height = $(window).height() * 0.8;
-	var width = height * (16/9);
+	var width = $(window).innerWidth() * 0.75;
+	var height = width * 9/16;
 	$('#video_player').height(height);
 	$('#video_and_buttons .btn').height(height);
 	$('#video_and_buttons .btn span').css('top', height/2);
@@ -32,7 +32,7 @@ var setFinishEvent = function() {
 		console.log('Video finished!!!');
 		var split_url = window.location.href.split('/');
 		var page_num = parseInt(split_url.pop(), 10);
-		if (page_num + 1 < 30) {
+		if (page_num + 1 < 45) {
 			window.location.href = split_url.join('/') + '/' + (++page_num);
 		}
 	}

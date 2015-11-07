@@ -38,12 +38,22 @@ var preset_channels = {
 	]
 };
 
+// Fisher-Yates algorithm to randomly shuffle array
+var shuffle_array = function (array) {
+	for (var i=0; i<array.length-1; i++) {
+		var k = i + Math.floor(Math.random() * (array.length - i));
+		var tmp = array[k];
+		array[k] = array[i];
+		array[i] = tmp;
+	}
+}
+
 var get_video_json = function (channel_path, callback) {
 	lib.request({
 		path : channel_path,
 		query : {
 			page : 1,
-			per_page : 10,
+			per_page : 15,
 			sort: 'date'
 		}
 	}, /*callback*/ function (error, vids_body, status_code, headers) {
@@ -77,18 +87,21 @@ var get_json = function (channel_stub, callback) {
 	});
 }
 
+
+// / / / / / / / //
+// R O U T I N G //
+// / / / / / / / //
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
 	res.redirect('/exp');
 });
 
-/* Calls Vimeo API to set json string to result for [category] videos, then redirects to one video */
-
 // EXPERIMENTAL
 router.get('/exp', function(req, res, next) {
 	get_json('exp', function(body) {
+		shuffle_array(body.data);
 		json = body;
-		console.log(json);
 		res.redirect('/exp/' + place_holder)
 	});
 });
@@ -112,6 +125,7 @@ router.get('/exp/:id', function(req, res, next) {
 // ARTS & DESIGN
 router.get('/art', function(req, res, next) {
 	get_json('art', function(body) {
+		shuffle_array(body.data);
 		json = body;
 		res.redirect('/art/' + place_holder)
 	});
@@ -136,6 +150,7 @@ router.get('/art/:id', function(req, res, next) {
 // ANIMATION
 router.get('/ani', function(req, res, next) {
 	get_json('ani', function(body) {
+		shuffle_array(body.data);
 		json = body;
 		res.redirect('/ani/' + place_holder)
 	});
@@ -160,6 +175,7 @@ router.get('/ani/:id', function(req, res, next) {
 // MUSIC
 router.get('/mus', function(req, res, next) {
 	get_json('mus', function(body) {
+		shuffle_array(body.data);
 		json = body;
 		res.redirect('/mus/' + place_holder)
 	});

@@ -1,18 +1,26 @@
 // VARIABLES
 @charcoal: #333;
+@light-gray: #9d9d9d;
 @purple: rgb(150, 0, 250);
 
 body {
 	background-color: @charcoal;
 	h1 {
 		margin-top: 60px;
-		font-size: 0.7em;
+		font-size: 0.8em;
 		letter-spacing: 1.5px;
 		text-transform: uppercase;
 		text-align: center;
+		a {
+			color: @light-gray;
+			&:hover {
+				color: white;
+				text-decoration: none;
+			}
+		}
 	}
 	h1, p {
-		color: #FFF;
+		color: @light-gray;
 	}
 }
 
@@ -20,6 +28,26 @@ li {
 	font-size: 0.7em;
 	letter-spacing: 1.5px;
 	text-transform: uppercase;
+}
+
+ul .dropdown-menu {
+	background-color: black;
+	border-radius: 0;
+	li {
+		a {
+			color: @light-gray;
+			&:hover {
+				color: white;
+				background-color: black;
+			}
+		}
+	}
+	.active {
+		a, a:hover {
+			background-color: black;
+			color: @purple;
+		}
+	}
 }
 
 /* NAVBAR LOGO */

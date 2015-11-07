@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var https = require('https');
+var async = require('async');
 
 // VIMEO API STUFF
 var CLIENT_ID = 'b4760bed5e4deb04e2153e81d5c573a738bb6085';
@@ -13,35 +14,67 @@ var lib = new Vimeo(CLIENT_ID, CLIENT_SECRET, ACCESS_TOKEN);
 // Extra variables
 var json = "";
 var place_holder = 0;
+// HAND-PICKED CHANNELS ON VIMEO
+var preset_channels = {
+	'exp': [	// Experimental
+		'/channels/techart',
+		'/channels/motiongraphics',
+		'/channels/creativetechnology'
+	],
+	'art': [ // Arts & Design
+		'/channels/1nspirational',
+		'/channels/fubiz',
+		'/channels/psysoda'
+	],
+	'ani': [ // Animation
+		'/channels/everythinganimated',
+		'/channels/wineaftercoffee',
+		'/channels/animationandpuppets'
+	],
+	'mus': [ // Music
+		'/channels/musicvideos',
+		'/channels/hdmusicvideos',
+		'/channels/7588' // concerts
+	]
+};
 
-// Calls Vimeo API with provided path and executes callback after
-var get_json = function (category_path, callback) {
-	 	lib.request(/*options*/{
-			// This is the path for the videos contained within the staff picks channels
-			path : category_path + '?sort=relevant',
-			//This adds the parameters to request page two, and 10 items per page
-			query : {
-				page : 1,
-				per_page : 30
-			}
-		}, /*callback*/function (error, body, status_code, headers) {
-			if (error) {
-				console.log('error');
-				console.log(error);
-				callback('ERROR!');
-			} else {
-				// console.log('body');
-				// console.log(body);
-				callback(body);
-			}
-/*
-			console.log('status code');
-			console.log(status_code);
-			console.log('headers');
-			console.log(headers);
-*/
-			//console.log(body.data[0].link);
+var get_video_json = function (channel_path, callback) {
+	lib.request({
+		path : channel_path,
+		query : {
+			page : 1,
+			per_page : 10,
+			sort: 'date'
+		}
+	}, /*callback*/ function (error, vids_body, status_code, headers) {
+		if (error) {
+			console.log(error);
+			callback('ERROR: ' + error);
+		} else {
+			callback(vids_body);
+		}
+	});
+}
+
+var get_json = function (channel_stub, callback) {
+	var all_videos = {
+		'data': []
+	}
+	console.log("PRESETS: ", preset_channels['exp'][0]);
+	async.each(preset_channels[channel_stub], function(data, callback) {
+		console.log("Channel: " + data.name);
+		get_video_json(data + '/videos', function(vids_body) {
+			all_videos.data = all_videos.data.concat(vids_body.data);
+			callback();
 		});
+	}, function(err) {
+		if (err) {
+			console.log(err);
+		} else {
+			// console.log(all_videos);
+			callback(all_videos);
+		}
+	});
 }
 
 /* GET home page. */
@@ -53,8 +86,9 @@ router.get('/', function(req, res, next) {
 
 // EXPERIMENTAL
 router.get('/exp', function(req, res, next) {
-	get_json('/categories/experimental/videos', function(body) {
+	get_json('exp', function(body) {
 		json = body;
+		console.log(json);
 		res.redirect('/exp/' + place_holder)
 	});
 });
@@ -69,14 +103,15 @@ router.get('/exp/:id', function(req, res, next) {
 			title: 'Experimental', 
 			tag: 'exp', 
 			object: json.data[req.params.id], 
-			curr_id: req.params.id });
+			curr_id: req.params.id 
+		});
 	}
 });
 
 
-// ART & DESIGN
+// ARTS & DESIGN
 router.get('/art', function(req, res, next) {
-	get_json('/categories/art/videos', function(body) {
+	get_json('art', function(body) {
 		json = body;
 		res.redirect('/art/' + place_holder)
 	});
@@ -92,14 +127,15 @@ router.get('/art/:id', function(req, res, next) {
 			title: 'Arts & Design', 
 			tag: 'art',
 			object: json.data[req.params.id], 
-			curr_id: req.params.id });
+			curr_id: req.params.id 
+		});
 	}
 });
 
 
 // ANIMATION
 router.get('/ani', function(req, res, next) {
-	get_json('/categories/animation/videos', function(body) {
+	get_json('ani', function(body) {
 		json = body;
 		res.redirect('/ani/' + place_holder)
 	});
@@ -115,7 +151,32 @@ router.get('/ani/:id', function(req, res, next) {
 			title: 'Animation', 
 			tag: 'ani',
 			object: json.data[req.params.id], 
-			curr_id: req.params.id });
+			curr_id: req.params.id 
+		});
+	}
+});
+
+
+// MUSIC
+router.get('/mus', function(req, res, next) {
+	get_json('mus', function(body) {
+		json = body;
+		res.redirect('/mus/' + place_holder)
+	});
+});
+
+router.get('/mus/:id', function(req, res, next) {
+	place_holder = 0;
+	if (!json) {
+		place_holder = req.params.id;
+		res.redirect('/ani');
+	} else {
+		res.render('index', { 
+			title: 'Music', 
+			tag: 'mus',
+			object: json.data[req.params.id], 
+			curr_id: req.params.id 
+		});
 	}
 });
 

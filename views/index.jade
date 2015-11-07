@@ -1,7 +1,8 @@
 extends layout
 
 block content
-	h1= title
+	h1 
+		a(href= object.link, target='_blank')= object.name
 
 	div(id='video_and_buttons')
 
@@ -12,11 +13,12 @@ block content
 			a.btn.btn-info.disabled(href='/'+tag+'/'+(Number(curr_id)-1), id='prev_button', role='button') 
 				span.glyphicon.glyphicon-chevron-left
 
-		iframe(id = 'video_player',
-						src = 'https://player.vimeo.com' + object.uri.replace(/videos/, 'video') + 
-								'?api=1&player_id=video_player&autoplay=1&color=9600FA',
-						frameborder = '0',
-						webkitallowfullscreen, mozallowfullscreen,allowfullscreen)
+		if object != -1
+			iframe(id = 'video_player',
+							src = 'https://player.vimeo.com' + object.uri.replace(/videos/, 'video') + 
+									'?api=1&player_id=video_player&autoplay=1&color=9600FA',
+							frameborder = '0',
+							webkitallowfullscreen, mozallowfullscreen,allowfullscreen)
 
 		if curr_id < 29				
 			a.btn.btn-info(href='/'+tag+'/'+(Number(curr_id)+1), id='next_button', role='button')
@@ -26,5 +28,5 @@ block content
 				span.glyphicon.glyphicon-chevron-right
 
 	div(id='video_description')
-		
+
 

@@ -3,6 +3,7 @@
 $(document).ready(function() {
 	setVideoDimensions();
 	setFinishEvent();
+	setCurrent();
 });
 
 $(window).resize(function() {
@@ -35,4 +36,17 @@ var setFinishEvent = function() {
 			window.location.href = split_url.join('/') + '/' + (++page_num);
 		}
 	}
+}
+
+// Sets the current channel in the dropdown to be active
+var setCurrent = function() {
+	var path = window.location.pathname;					// e.g. /exp/0
+	var stub_path = '/' + path.split('/')[1];			// e.g. /exp
+
+	$('.dropdown-menu li').each(function() {
+		var href = $(this).children().attr('href');	// e.g. /exp
+		if (href == stub_path) {
+			$(this).toggleClass('active');
+		}
+	});
 }

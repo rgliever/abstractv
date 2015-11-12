@@ -1,7 +1,8 @@
 extends layout
 
 block content
-	h1
+	h1#channel= title
+	h2#video_title
 		a(href= JSON.parse(json)[0].link, target="_blank")= JSON.parse(json)[0].name
 	
 	div#video_and_buttons

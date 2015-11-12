@@ -12,7 +12,7 @@ $(window).resize(function() {
 });
 
 var setVideoDimensions = function() {
-	var width = $(window).innerWidth() * 0.75;
+	var width = $(window).innerWidth() * 0.7;
 	var height = width * 9/16;
 	$('#video_player').height(height);
 	$('#video_and_buttons .btn').height(height);
@@ -88,6 +88,6 @@ var updateView = function() {
 	var url = 'https://player.vimeo.com' + jsonData[index].uri.replace(/videos/, 'video') +
 						'?api=1&player_id=video_player&autoplay=1&color=9600FA';
 	$('#video_player').attr('src', url);
-	$('h1 a').attr("href", jsonData[index].link);
-	$('h1 a').text(jsonData[index].name);
+	$('#video_title a').attr("href", jsonData[index].link);
+	$('#video_title a').text(jsonData[index].name);
 }

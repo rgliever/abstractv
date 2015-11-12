@@ -7,13 +7,18 @@ html
 		link(rel='stylesheet', href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css",
 		integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==",crossorigin="anonymous")
 		link(rel='stylesheet', type='text/css', href='http://fonts.googleapis.com/css?family=Lily+Script+One')
+		link(rel='stylesheet', type='text/css', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css')
 		link(rel='stylesheet', type='text/css', href='/stylesheets/style.css')
 		// JAVASCRIPTS
-		script(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+		script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js')
+		script(src='https://code.jquery.com/ui/1.11.4/jquery-ui.js')
 		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js",
 		integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==",crossorigin="anonymous")
 		script(src="https://f.vimeocdn.com/js/froogaloop2.min.js")
+		script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js')
 		script(src='/javascripts/style.js')
+		script(type='text/javascript').
+			var jsonData = !{json}
 	body
 		// Fixed navbar
 		.navbar.navbar-default.navbar-fixed-top.navbar-inverse(role='navigation')
@@ -27,8 +32,6 @@ html
 					a.navbar-brand(href='/', id='logo') AbstracTV
 				.navbar-collapse.collapse
 					ul.nav.navbar-nav
-						// li
-							// a(href='/') Home
 						li.dropdown
 							a.dropdown-toggle(href='#', data-toggle='dropdown')
 								| Channels 
@@ -45,4 +48,8 @@ html
 		block content
 		footer
 			hr
-			p Ryan Gliever 2015
+			p 
+				a(href="https://github.com/rgliever/abstractv", target="_blank") 
+					i.fa.fa-github.fa-lg
+				|  | Ryan Gliever 2015
+

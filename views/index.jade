@@ -1,31 +1,19 @@
 extends layout
 
 block content
-	h1 
-		a(href= object.link, target='_blank')= object.name
+	h1
+		a(href= JSON.parse(json)[0].link, target="_blank")= JSON.parse(json)[0].name
+	
+	div#video_and_buttons
+		button.btn#prev_button(role='button' onclick="prevId()")
+			span.glyphicon.glyphicon-chevron-left
 
-	div(id='video_and_buttons')
-
-		if curr_id > 0
-			a.btn.btn-info(href='/'+tag+'/'+(Number(curr_id)-1), id='prev_button', role='button') 
-				span.glyphicon.glyphicon-chevron-left
-		else
-			a.btn.btn-info.disabled(href='/'+tag+'/'+(Number(curr_id)-1), id='prev_button', role='button') 
-				span.glyphicon.glyphicon-chevron-left
-
-		iframe(id = 'video_player',
-						src = 'https://player.vimeo.com' + object.uri.replace(/videos/, 'video') + 
-									'?api=1&player_id=video_player&autoplay=1&color=9600FA',
+		iframe#video_player(src = 'https://player.vimeo.com' + JSON.parse(json)[0].uri.replace(/videos/, 'video') + 
+															'?api=1&player_id=video_player&autoplay=1&color=9600FA',
 						frameborder = '0',
 						webkitallowfullscreen, mozallowfullscreen, allowfullscreen)
-
-		if curr_id < 44			
-			a.btn.btn-info(href='/'+tag+'/'+(Number(curr_id)+1), id='next_button', role='button')
-				span.glyphicon.glyphicon-chevron-right
-		else
-			a.btn.btn-info.disabled(href='/'+tag+'/'+(Number(curr_id)+1), id='next_button', role='button')
-				span.glyphicon.glyphicon-chevron-right
-
-	div(id='video_description')
+	
+		button.btn#next_button(role='button' onclick="nextId()")
+			span.glyphicon.glyphicon-chevron-right
 
 

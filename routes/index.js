@@ -67,12 +67,9 @@ var get_video_json = function (channel_path, callback) {
 }
 
 var get_json = function (channel_stub, callback) {
-	var all_videos = {
-		'data': []
-	}
-	console.log("PRESETS: ", preset_channels['exp'][0]);
+	var all_videos = { 'data': [] }
+
 	async.each(preset_channels[channel_stub], function(data, callback) {
-		console.log("Channel: " + data.name);
 		get_video_json(data + '/videos', function(vids_body) {
 			all_videos.data = all_videos.data.concat(vids_body.data);
 			callback();
@@ -85,6 +82,18 @@ var get_json = function (channel_stub, callback) {
 			callback(all_videos);
 		}
 	});
+}
+
+var construct_short_json = function (data) {
+	var short_json = [];
+	for (var i=0; i<data.length; i++) {
+		var object = new Object();
+		object.uri = data[i].uri;
+		object.name = data[i].name;
+		object.link = data[i].link;
+		short_json.push(object);
+	}
+	return short_json;
 }
 
 
@@ -100,12 +109,19 @@ router.get('/', function(req, res, next) {
 // EXPERIMENTAL
 router.get('/exp', function(req, res, next) {
 	get_json('exp', function(body) {
-		shuffle_array(body.data);
-		json = body;
-		res.redirect('/exp/' + place_holder)
+		var short_json = construct_short_json(body.data);
+		shuffle_array(short_json);
+
+		res.render('index', { 
+			title: 'Experimental', 
+			tag: 'exp',
+			json: JSON.stringify(short_json)
+		});
+
 	});
 });
 
+/*
 router.get('/exp/:id', function(req, res, next) {
 	place_holder = 0;
 	if (!json) {
@@ -120,80 +136,53 @@ router.get('/exp/:id', function(req, res, next) {
 		});
 	}
 });
+*/
 
 
 // ARTS & DESIGN
 router.get('/art', function(req, res, next) {
 	get_json('art', function(body) {
-		shuffle_array(body.data);
-		json = body;
-		res.redirect('/art/' + place_holder)
-	});
-});
+		var short_json = construct_short_json(body.data);
+		shuffle_array(short_json);
 
-router.get('/art/:id', function(req, res, next) {
-	place_holder = 0;
-	if (!json) {
-		place_holder = req.params.id;
-		res.redirect('/art');
-	} else {
 		res.render('index', { 
 			title: 'Arts & Design', 
 			tag: 'art',
-			object: json.data[req.params.id], 
-			curr_id: req.params.id 
+			json: JSON.stringify(short_json)
 		});
-	}
+
+	});
 });
 
 
 // ANIMATION
 router.get('/ani', function(req, res, next) {
 	get_json('ani', function(body) {
-		shuffle_array(body.data);
-		json = body;
-		res.redirect('/ani/' + place_holder)
-	});
-});
+		var short_json = construct_short_json(body.data);
+		shuffle_array(short_json);
 
-router.get('/ani/:id', function(req, res, next) {
-	place_holder = 0;
-	if (!json) {
-		place_holder = req.params.id;
-		res.redirect('/ani');
-	} else {
 		res.render('index', { 
 			title: 'Animation', 
 			tag: 'ani',
-			object: json.data[req.params.id], 
-			curr_id: req.params.id 
+			json: JSON.stringify(short_json)
 		});
-	}
-});
 
+	});
+});
 
 // MUSIC
 router.get('/mus', function(req, res, next) {
 	get_json('mus', function(body) {
-		shuffle_array(body.data);
-		json = body;
-		res.redirect('/mus/' + place_holder)
-	});
-});
+		var short_json = construct_short_json(body.data);
+		shuffle_array(short_json);
 
-router.get('/mus/:id', function(req, res, next) {
-	place_holder = 0;
-	if (!json) {
-		place_holder = req.params.id;
-		res.redirect('/ani');
-	} else {
 		res.render('index', { 
 			title: 'Music', 
 			tag: 'mus',
-			object: json.data[req.params.id], 
-			curr_id: req.params.id 
+			json: JSON.stringify(short_json)
 		});
-	}
+
+	});
 });
 
 

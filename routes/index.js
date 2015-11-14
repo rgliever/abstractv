@@ -16,22 +16,22 @@ var preset_channels = {
 	'exp': [	// Experimental
 		'/channels/techart',
 		'/channels/motiongraphics',
-		'/channels/creativetechnology'
+		'/channels/beeple'
 	],
 	'art': [ // Arts & Design
 		'/channels/1nspirational',
 		'/channels/fubiz',
-		'/channels/psysoda'
+		'/channels/apmotions'
 	],
 	'ani': [ // Animation
 		'/channels/everythinganimated',
 		'/channels/wineaftercoffee',
-		'/channels/animationandpuppets'
+		'/channels/pegbarandgrill'
 	],
 	'mus': [ // Music
 		'/channels/musicvideos',
 		'/channels/hdmusicvideos',
-		'/channels/7588' // concerts
+		'/channels/musicvideoland'
 	]
 };
 

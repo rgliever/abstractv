@@ -5,9 +5,6 @@ var https = require('https');
 var async = require('async');
 
 // VIMEO API STUFF
-//var CLIENT_ID = 'b4760bed5e4deb04e2153e81d5c573a738bb6085';
-//var CLIENT_SECRET = 'ltaQMGVW9XVm8727xBDYb2pVHNk46/zTwWaNP2ZzZlYS3Y6idGrqrFv4Oag2XERkCAm7efp83lpT6pwcXIDLfBBWTk35t3I6ISyRRWkZuuVchfdAVU0AxYQzEZu47W2E'
-//var ACCESS_TOKEN = 'a285411f565d45e3cdbed7b5ab924d4b';
 var Vimeo = require('vimeo').Vimeo;
 var lib = new Vimeo(process.env.CLIENT_ID, process.env.CLIENT_SECRET, process.env.ACCESS_TOKEN);
 
